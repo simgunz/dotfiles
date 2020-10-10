@@ -1,0 +1,41 @@
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  push-u = !git push -u origin $(git symbolic-ref --short HEAD)
+  unstage = reset HEAD --
+  hist = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  type = cat-file -t
+  dump = cat-file -p
+  unrm = "!COMMIT=$(git log -1 --pretty=%h -- \"$1\"); git checkout $COMMIT^ -- \"$1\"; echo \"File: $1, was restored from commit $COMMIT\"; git show -s $COMMIT"
+  unstash = checkout stash@{0} --
+  stash-unapply = !git stash show -p | git apply -R
+  please = push --force-with-lease
+  commend = commit --amend --no-edit
+  it = !git init && git commit -m “root” --allow-empty
+  stsh = stash --keep-index
+  staash = stash --include-untracked
+  staaash = stash --all
+  shorty = status --short --branch
+  merc = merge --no-ff
+  grog = log --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+[push]
+    default = simple
+[branch]
+    autosetuprebase = always
+[core]
+    editor = vim
+    autocrlf = input
+[gc]
+    autoDetach = false
+[rerere]
+    enabled = true
+    autoupdate = true
+[diff]
+    tool =
+[merge]
+    tool = vimdiff
+    guitool = kompare
+[include]
+    path = ~/.gitconfig_local
