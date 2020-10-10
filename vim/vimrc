@@ -1,0 +1,305 @@
+" Auto-install " Plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * " PlugInstall --sync | source $MYVIMRC
+endif
+
+" " Plug configuration
+call plug#begin('~/.vim/plugged')
+
+Plug 'tpope/vim-sensible'
+Plug 'vim-airline/vim-airline'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
+Plug 'aacunningham/vim-fuzzy-stash'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'         " show modified lines
+Plug 'idanarye/vim-merginal'          " Deal with git branches
+Plug 'tpope/vim-dispatch'             " Execute async shell commands (e.g :Make!)
+Plug 'tmhedberg/simpylfold'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'            " Add quotes and other stuff around text
+Plug 'tpope/vim-obsession'            " Manage sessions
+Plug 'tpope/vim-eunuch'              " Add file management utils (e.g. :Rename)
+" " Plug 'Valloric/YouCompleteMe'
+" " Plug 'tpope/vim-speeddating'
+" " Plug 'tpope/vim-repeat'
+" " Plug 'svermeulen/vim-subversive'
+" " Plug 'svermeulen/vim-yoink'
+" " Plug 'svermeulen/vim-cutlass'
+
+" Plug 'machakann/vim-highlightedyank'
+Plug 'unblevable/quick-scope'        " Highlight letter usable with f
+Plug 'romainl/vim-cool'              " Clear search highlight automatically
+Plug '0x0dea/vim-molasses'           " Punishment for using arrow-like movements 
+Plug 'chaoren/vim-wordmotion'        " Treat snake and camel case as separate words
+Plug 'michaeljsmith/vim-indent-object' " Define indent text objects for python
+Plug 'wellle/targets.vim'              " Define many new text objects
+Plug 'jeetsukumaran/vim-pythonsense'   " python text objects
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Intellisense
+Plug 'vim-test/vim-test'
+" Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+Plug 'kkoomen/vim-doge'
+" Plug 'simeji/winresizer'
+" Plug 'sirver/ultisnips'
+" Plug 'skyleach/pudb.vim'
+
+" " Plug 'lazywei/vim-matlab'
+" " Plug 'yinflying/matlab-screen'
+
+" " Plug 'wmvanvliet/jupyter-vim'
+" " Plug 'szymonmaszke/vimpyter'
+
+" Themes
+Plug 'morhetz/gruvbox'
+
+" Initialize plugin system
+call plug#end()
+
+" Basic vim configuration  
+let mapleader = "\<Space>"
+let maplocalleader = ","
+
+set number                  " enable line numbers (on current line when relativenumber is on)
+set relativenumber          " enable line numbers relative to current line
+set pastetoggle=<F2>        " toggle paste mode
+set showmatch               " highlight matching parenthesis
+set mouse=a                 " Enable the mouse in all modes
+set encoding=utf-8
+set clipboard=unnamedplus   " Yank and similar operations copy to X11 clipboard
+set splitright
+set splitbelow
+set foldmethod=syntax       " fold code based on syntax
+set nofoldenable            " no fold for new buffers, use zi to toggle
+set cursorline              " highlight the current line
+" set shortmess=a           " abbreviations in messages
+" Searching
+set ignorecase              " case insensitive search
+set smartcase               " case sensitive if pattern has a capital letter
+set hlsearch                " highlight search results
+" Tabbing and indent
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set smarttab
+set termguicolors           " true color terminal
+
+color gruvbox
+set background=dark
+highlight ColorColumn ctermbg=236  " color of the textwidth marker
+
+" Let's save undo info!
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=~/.vim/undo-dir   " Store undo history here
+set undofile                  " Maintain undo history between sessions
+" set autowrite                 " auto-save when switching buffer
+set autowriteall              " auto-save when switching buffer and edit new file
+
+" Mappings (no inline comments here)
+inoremap jk <esc>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap 0 ^
+ 
+" Ctrl+R replace selected text globally
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
+
+" Mappings for habits
+inoremap <esc> <nop>
+
+" Clipboard Management
+nnoremap <leader>p "+p
+
+" Buffer management
+nnoremap <leader>s :update<CR>
+nnoremap gn :bn<CR>
+nnoremap gp :bp<CR>
+nnoremap gl :b#<CR>
+nnoremap <leader>d :bd<CR>
+nnoremap <leader>D :bd!<CR>
+" Close all the buffers
+map <leader>ba :bufdo bd<cr>
+
+" Window management
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <leader>ws :split<cr>
+nnoremap <leader>wv :vsplit<CR>
+nnoremap <leader>wd <C-W>q
+
+" Tabs management
+map <leader>tc :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>td :tabclose<cr>
+map <leader>tm :tabmove
+
+" Let 'tl' toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap <leader>tl :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
+" Toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr> 
+
+" vim-airline
+let g:airline_powerline_fonts = 1
+
+" FZF
+set rtp+=~/.fzf
+nnoremap <leader>ww :Windows<CR>
+nnoremap <leader><leader> :Buffers<CR>
+nnoremap <leader>o :Files<CR>
+nnoremap <leader>h :History<CR>
+nnoremap <leader>l :BLines<CR>
+nnoremap <leader>L :Lines<CR>
+nnoremap <leader>r :Rg 
+nnoremap <leader>R :Rg <c-r><c-w><cr> 
+nnoremap <leader>tt :BTags<CR>
+nnoremap <leader>T :Tags<CR>
+
+
+" Autocommands
+
+"Language interpreter/compiler execution
+autocmd FileType ruby map rbr :!/usr/bin/ruby %
+autocmd FileType sh map shr :!/usr/bin/env bash %
+
+augroup vimStartup
+    autocmd!
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid, when inside an event handler
+    " (happens when dropping a file on gvim) and for a commit message (it's
+    " likely a different one than last time).
+    autocmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+      \ |   exe "normal! g`\""
+      \ | endif
+
+    " autocmd FileType text setlocal textwidth=88
+    autocmd BufEnter * :syntax sync fromstart
+
+    " Automatically create parent directory of new files
+    autocmd BufWritePre * if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h")) | execute "silent! !mkdir -p ".shellescape(expand('%:h'), 1) | redraw! | endif
+augroup END
+
+augroup filetype_ruby
+    autocmd!
+    autocmd FileType ruby nnoremap <buffer> <localleader>c I# <esc>
+    autocmd FileType ruby nnoremap <buffer> <localleader>dc ^xx <esc>
+    autocmd FileType ruby nnoremap <buffer> <localleader>r :!clear; bundle exec rake -t<cr>
+augroup END
+
+augroup filetype_python
+    autocmd!
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set textwidth=88
+    set colorcolumn=88
+    set expandtab
+    set autoindent
+    set fileformat=unix
+    autocmd FileType python nnoremap <localleader>r :!clear; /usr/bin/env python %<cr>
+    autocmd FileType python nnoremap <localleader>t :TestFile<cr>
+    autocmd FileType python nnoremap <localleader>n :TestNearest<cr>
+    autocmd FileType python nnoremap <localleader>l :TestLast<cr>
+    autocmd FileType python nnoremap <silent> <localleader>b obreakpoint()<esc>
+    autocmd FileType python nnoremap <silent> <localleader>db :bufdo %s/\n\s*breakpoint()//ge<cr>
+    autocmd FileType python nnoremap <silent> <localleader>md :Make! docs<cr>
+    autocmd FileType python nnoremap <silent> <localleader>pl oimport matplotlib.pyplot as plt<cr>plt.show()<esc>Oplt.plot(
+    autocmd FileType python normal zRzm
+augroup END
+
+augroup filetype_javascript
+    autocmd!
+    autocmd FileType javascript nnoremap <localleader>r :!clear; /usr/bin/env yarn test %<cr>
+augroup END
+
+" Plugins configuration
+
+" vim-molasses
+let g:molasses_keys = "hjklweb"
+let g:molasses_wait = 500
+
+" vim-test
+let test#strategy = "vimterminal"
+nnoremap <silent> t<C-n> :TestNearest<CR>
+nnoremap <silent> t<C-f> :TestFile<CR>
+nnoremap <silent> t<C-s> :TestSuite<CR>
+nnoremap <silent> t<C-l> :TestLast<CR>
+nnoremap <silent> t<C-g> :TestVisit<CR>
+
+" vim-wordmotion
+let g:wordmotion_prefix = '<leader>'
+
+" coc.nvim
+source ~/.vim/cocnvim.vim
+
+" vimspector
+" let g:vimspector_enable_mappings = 'HUMAN'
+" packadd! vimspector
+
+" ale
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['black'],
+\}
+nnoremap <leader>f :ALEFix<CR>
+nnoremap <silent> <C-e> :ALENextWrap<CR>
+
+" vim-pydocstring
+let g:pydocstring_doq_path = "/media/work/software/peg/.venv/bin/doq"
+let g:pydocstring_formatter = 'numpy'
+
+" vim-doge
+let g:doge_doc_standard_python = 'numpy' 
+let g:doge_mapping = '<localleader>d'
+let g:doge_mapping_comment_jump_forward = '<localleader><Tab>'
+
+" fugitive
+nnoremap <leader>xr :Gread<CR>
+nnoremap <leader>xw :Gwrite<CR><CR>
+nnoremap <leader>xs :Gstatus<CR>
+nnoremap <leader>xc :Gcommit -v -q<CR>
+nnoremap <leader>xca :Gcommit --amend -v -q<CR>
+nnoremap <leader>xco :GCheckout<CR>
+nnoremap <leader>xb :Git branch<Space>
+" nnoremap <leader>xt :Gcommit -v -q %:p<CR>
+nnoremap <leader>xd :Gdiff<CR>
+" nnoremap <leader>xe :Gedit<CR>
+" nnoremap <leader>xl :silent! Glog<CR>:bot copen<CR>
+nnoremap <leader>xp :Ggrep<leader>
+nnoremap <leader>xmv :Gmove<leader>
+" nnoremap <leader>xps :Dispatch! git push<CR>
+" nnoremap <leader>xpl :Dispatch! git pull<CR>
+nnoremap <leader>xp :Git push
+nnoremap <leader>xl :Git pull<CR>
+nnoremap <leader>xf :Git fetch --all<CR>
+nnoremap <leader>xsta :GStash
+nnoremap <leader>xstl :GStashList<CR>
+
+" git-gutter
+let g:gitgutter_preview_win_floating = 1  " this prevents stagin partial hunks from the window
+omap ih <Plug>(GitGutterTextObjectInnerPending)
+omap ah <Plug>(GitGutterTextObjectOuterPending)
+xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+xmap ah <Plug>(GitGutterTextObjectOuterVisual)
+
+" vim-fuzzy-stash
+let g:fuzzy_stash_actions = {
+  \ 'ctrl-d': 'drop',
+  \ 'ctrl-p': 'pop',
+  \ 'ctrl-a': 'apply' }
