@@ -1,3 +1,6 @@
+[user]
+    email = simgunz@gmail.com
+    name = Simone Gaiarin
 [alias]
   co = checkout
   ci = commit
@@ -37,5 +40,7 @@
 [merge]
     tool = vimdiff
     guitool = kompare
+[user]
+    useConfigOnly = true
 [include]
     path = ~/.gitconfig_local
