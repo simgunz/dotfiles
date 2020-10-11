@@ -2,3 +2,7 @@
     ~/.vimrc: vim/vimrc
     ~/.vim/coc-settings.json: vim/coc-settings.json
     ~/.vim/cocnvim.vim: vim/cocnvim.vim
+
+- clean: [
+    '~/.vim'
+]
