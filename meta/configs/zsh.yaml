@@ -1,5 +1,6 @@
 - link:
     ~/.zshrc: zsh/zshrc
+    ~/.p10k.zsh: zsh/p10k.zsh
 
 - shell:
     - curl -L git.io/antigen > ~/.antigen.zsh  # chsh -s /usr/bin/zsh ${USER} to set as default shell
