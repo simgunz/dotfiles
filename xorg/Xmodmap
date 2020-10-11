@@ -1,0 +1,12 @@
+keycode 66 = Mode_switch
+keysym h = h H Left Left ugrave Ugrave
+keysym l = l L Right Right
+keysym k = k K Up Up
+keysym j = j J Down Down
+keysym u = u U Prior Prior
+keysym i = i I Home Home
+keysym o = o O End End
+keysym p = p P Next Next
+keysym period = period greater Delete Delete oacute Oacute
+keysym comma = comma less BackSpace BackSpace ograve Ograve
+
