@@ -1,0 +1,31 @@
+# cycle forward
+Control-f: menu-complete
+
+# cycle backward
+Control-b: menu-complete-backward
+
+# display one column with matches
+set completion-display-width 1
+
+# ignore case in autocompletion
+set completion-ignore-case on
+
+#Map up and down to match beginning of old commands (like MATLAB)
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+#Expand arguments by hitting space
+$if Bash
+  Space: magic-space
+$endif
+
+#Alt+0 - Add argument to previous command
+"\M-O": "\C-p\C-a\M-f "

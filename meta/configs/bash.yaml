@@ -1,0 +1,6 @@
+- link:
+    ~/.bashrc_custom: bash/bashrc_custom
+    ~/.inputrc: bash/inputrc
+
+- shell:
+    - "[[ -f ~/.bashrc_custom ]] && grep -q bashrc_custom ~/.bashrc || echo 'source ~/.bashrc_custom' >> ~/.bashrc"

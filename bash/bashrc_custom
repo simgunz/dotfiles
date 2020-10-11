@@ -1,0 +1,93 @@
+################################### CUSTOM ###################################
+export EDITOR=vim
+export LANG=en_US.UTF-8
+
+#Make bash history already available to new sessions
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+HISTSIZE=2000
+
+#Set bash tab to 4 characters
+tabs 4
+
+# Mute sytem bell
+xset -b
+
+# Fuzzy search
+[[ -f /usr/share/fzf/key-bindings.bash ]] && source /usr/share/fzf/key-bindings.bash
+[[ -f /usr/share/fzf/completion.bash ]] && source /usr/share/fzf/completion.bash
+
+alias ..='cd ..'
+
+alias ll='ls -l'
+alias la='ls -Al'
+alias llg='ls -l | grep'
+alias lag='ls -Al | grep'
+
+alias psg='ps -Al | grep'
+alias psag='ps aux | grep'
+alias historyg='history | grep'
+
+alias x+='chmod +x'
+alias x-='chmod -x'
+
+# Turn off the screen
+alias screenoff='xset dpms force off'
+
+# Search in the content of files in current folder
+alias fic='grep -Iirn . -e 2> /dev/null'
+
+# Show the size of the objects in the current folder
+function treesize()
+{
+  folder=.
+  if [ ! -z "$1" ]; then
+    folder="$1"
+  fi
+
+     du -k --max-depth=1 "$folder" 2> /dev/null | sort -nr | awk '
+     BEGIN {
+        split("KB,MB,GB,TB", Units, ",");
+     }
+     {
+        u = 1;
+        while ($1 >= 1024) {
+           $1 = $1 / 1024;
+           u += 1
+        }
+        $1 = sprintf("%.1f %s", $1, Units[u]);
+        print $0;
+     }
+    '
+}
+
+# Find in name of files in current folder and subfolders
+function fin()
+{
+    find . -readable -iname "*${1}*" 2> /dev/null 
+}
+
+# Find files bigger than 100MB in current folder and subfolders
+function findbigfiles()
+{
+  folder=.
+  if [ ! -z "$1" ]; then
+    folder="$1"
+  fi
+
+  echo "Searching for files bigger than 100MB"
+  find "$folder" -type f -size +100000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+}
+
+# Find for leaf folders bigger than 100MB in current folder and subfolders
+function findbigfolders()
+{
+
+  folder=.
+  if [ ! -z "$1" ]; then
+    folder="$1"
+  fi
+
+  echo "Searching for leaf folders bigger than 100MB"
+  find "$folder" -type d -links 2 -size +100000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+}
