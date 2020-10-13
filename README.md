@@ -23,14 +23,14 @@ Structure of this repository is strongly inspired by [vsund](https://github.com/
 For installing a predefined profile:
 
 ```bash
-~/.dotfiles$ ./install-profile <profile> [<configs...>]
+$ ./install-profile <profile> [<configs...>]
 # see meta/profiles/ for available profiles
 ```
 
 For installing single configurations:
 
 ```bash
-~/.dotfiles$ ./install-standalone <configs...>
+$ ./install-standalone <configs...>
 # see meta/configs/ for available configurations
 ```
 
