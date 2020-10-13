@@ -17,7 +17,7 @@ Structure of this repository is strongly inspired by [vsund](https://github.com/
 ## Installation
 
 ```bash
-~$ git clone --recursive https://github.com/vbrandl/dotfiles .dotfiles
+~$ git clone --recursive https://github.com/vbrandl/dotfiles /path/to/install/location
 ```
 
 For installing a predefined profile:
