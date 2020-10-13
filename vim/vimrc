@@ -87,7 +87,6 @@ set expandtab
 set smarttab
 set termguicolors           " true color terminal
 
-color gruvbox
 set background=dark
 highlight ColorColumn ctermbg=236  " color of the textwidth marker
 
@@ -179,6 +178,8 @@ autocmd FileType sh map shr :!/usr/bin/env bash %
 
 augroup vimStartup
     autocmd!
+    autocmd vimenter * colorscheme gruvbox
+
     " When editing a file, always jump to the last known cursor position.
     " Don't do it when the position is invalid, when inside an event handler
     " (happens when dropping a file on gvim) and for a commit message (it's

@@ -6,3 +6,6 @@
 - clean: [
     '~/.vim'
 ]
+
+- shell:
+  - [vim -c 'PlugInstall' +qall, Installing vim plugins]
