@@ -304,3 +304,9 @@ let g:fuzzy_stash_actions = {
   \ 'ctrl-d': 'drop',
   \ 'ctrl-p': 'pop',
   \ 'ctrl-a': 'apply' }
+
+" local customizations in ~/.vimrc_local
+let $LOCALFILE=expand("~/.vimrc_local")
+if filereadable($LOCALFILE)
+    source $LOCALFILE
+endif
