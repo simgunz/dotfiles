@@ -8,7 +8,7 @@ fi
 zstyle :prompt:shrink_path fish yes
 
 # Use antigen
-source $HOME/.antigen.zsh
+source $HOME/.antigen/antigen.zsh
 
 POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
