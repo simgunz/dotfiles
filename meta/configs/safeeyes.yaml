@@ -1,0 +1,4 @@
+- link:
+    ~/.config/safeeyes/style/safeeyes_style.css:
+      force: true
+      path: safeeyes/safeeyes_style.css
