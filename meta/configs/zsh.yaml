@@ -3,4 +3,4 @@
     ~/.p10k.zsh: zsh/p10k.zsh
 
 - shell:
-  - [mkdir ~/.antigen && curl -L git.io/antigen > ~/.antigen/antigen.zsh, Installing antigen]
+  - [mkdir -p ~/.antigen && curl -L git.io/antigen > ~/.antigen/antigen.zsh, Installing antigen]
