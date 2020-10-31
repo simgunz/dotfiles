@@ -40,6 +40,8 @@
 [merge]
     tool = vimdiff
     guitool = kompare
+[rebase]
+    autosquash = true
 [user]
     useConfigOnly = true
 [include]
